@@ -1,0 +1,34 @@
+type Query {
+    query: [Interface!]!
+}
+
+interface Interface {
+    name: String!
+    age: Int!
+}
+
+type ObjectA implements Interface {
+    name: String!
+    age: Int!
+    aField(a: String b: String c: String): ObjectA
+    bField(a: String b: String c: String): ObjectB
+    cField(a: String b: String c: String): ObjectC
+}
+
+type ObjectB implements Interface {
+    name: String!
+    age: Int!
+    aField(a: String b: String c: String): ObjectA
+    bField(a: String b: String c: String): ObjectB
+    cField(a: String b: String c: String): ObjectC
+}
+
+type ObjectC implements Interface {
+    name: String!
+    age: Int!
+    aField(a: String b: String c: String): ObjectA
+    bField(a: String b: String c: String): ObjectB
+    cField(a: String b: String c: String): ObjectC
+}
+
+directive @abc(a: String b: String c: String) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT

@@ -1,0 +1,45 @@
+node_modules
+
+# Package manager
+pnpm-lock.yaml
+*lock.json
+
+# WunderGraph
+**/.wundergraph/cache
+**/.wundergraph/generated
+
+# Next.js build output
+.next
+out
+
+# Logs
+logs
+*.log
+
+# IDE
+.vscode
+.idea
+
+CHANGELOG.md
+
+# Ignore html files
+*.html
+
+# Ignore go files
+*.go
+
+# Generated PB files
+packages/protobuf/wgpb
+
+# Relay generated files
+**/operations/relay
+
+# These operations are generated, ignore them during formatting
+testapps/default/.wundergraph/operations/federated/*.graphql
+testapps/default/.wundergraph/operations/weather/GetCityById.graphql
+testapps/default/.wundergraph/operations/weather/GetCityByName.graphql
+packages/testsuite/apps/basic/.wundergraph/operations/weather/GetCityById.graphql
+packages/testsuite/apps/basic/.wundergraph/operations/weather/GetCityByName.graphql
+
+examples/sveltekit-oidc-cookies-auth
+examples/sveltekit-todos

@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/@lerna-lite/cli/schemas/lerna-schema.json",
+  "command": {
+    "publish": {
+      "registry": "https://registry.npmjs.org"
+    },
+    "version": {
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "syncWorkspaceLock": true,
+      "changelogIncludeCommitsClientLogin": " (@%l)",
+      "message": "chore(release): Publish [skip ci]"
+    }
+  },
+  "loglevel": "verbose",
+  "changelogPreset": "conventional-changelog-conventionalcommits",
+  "packages": [
+    "packages/create-wundergraph-app",
+    "packages/golang-client",
+    "packages/nextjs",
+    "packages/orm",
+    "packages/protobuf",
+    "packages/react-query",
+    "packages/react-relay",
+    "packages/rust-client",
+    "packages/sdk",
+    "packages/solid-query",
+    "packages/svelte-query",
+    "packages/swr",
+    "packages/vue-query"
+  ],
+  "npmClient": "pnpm",
+  "version": "independent"
+}

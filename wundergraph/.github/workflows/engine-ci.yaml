@@ -1,0 +1,83 @@
+name: Engine CI
+on:
+  push:
+    branches:
+      - main
+      - next
+    paths:
+      - '**/*.go'
+      - 'types/**/*'
+      - 'go.mod'
+      - 'go.sum'
+      - '.github/actions/go/action.yaml'
+      - '.github/actions/node/action.yaml'
+      - '.github/workflows/engine-ci.yaml'
+  pull_request:
+    branches:
+      - main
+      - next
+    paths:
+      - '**/*.go'
+      - 'types/**/*'
+      - 'go.mod'
+      - 'go.sum'
+      - '.github/actions/go/action.yaml'
+      - '.github/actions/node/action.yaml'
+      - '.github/workflows/engine-ci.yaml'
+
+concurrency:
+  group: ${{github.workflow}}-${{github.head_ref}}
+  cancel-in-progress: true
+
+env:
+  WG_TELEMETRY_DISABLED: 1
+  WORKING_DIRECTORY: '.'
+  CI: true
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/go
+        with:
+          working-directory: ${{ env.WORKING_DIRECTORY }}
+
+      - uses: ./.github/actions/node
+        with:
+          working-directory: ${{ env.WORKING_DIRECTORY }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Protoc
+        uses: abelfodil/protoc-action@v1
+        with:
+          protoc-version: '21.5'
+
+      - name: Start MinIO container
+        run: docker run -d --rm --name=minio --health-cmd "curl http://localhost:9000/minio/health/live" -e MINIO_ROOT_USER=minio -e MINIO_ROOT_PASSWORD=minio123 -p 9000:9000 -p 9090:9090 quay.io/minio/minio:RELEASE.2023-03-20T20-16-18Z server /data --console-address ":9090"
+
+      - name: Setup MinIO container
+        run: make bootstrap-minio
+
+      - run: pnpm install --ignore-scripts
+
+      - run: make engine-dev
+
+      - name: Check if git is not dirty after generating files
+        run: git diff --no-ext-diff --exit-code
+
+      - name: Linters
+        uses: golangci/golangci-lint-action@v3
+        with:
+          # keep in sync with local version
+          version: v1.52.2
+          args: --timeout 3m
+
+      - name: Run unit and integration tests
+        run: go test -race ./...
+        env:
+          INT: true

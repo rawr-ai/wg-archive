@@ -1,0 +1,106 @@
+name: NPM Packages CI
+on:
+  push:
+    branches:
+      - main
+      - next
+    paths:
+      - 'testapps/**/*'
+      - 'packages/**/*'
+      - 'pnpm-lock.yaml'
+      - '.github/actions/node/action.yaml'
+      - '.github/workflows/packages-ci.yaml'
+
+  pull_request:
+    branches:
+      - main
+      - next
+    paths:
+      - 'testapps/**/*'
+      - 'packages/**/*'
+      - '.github/workflows/packages-ci.yaml'
+
+concurrency:
+  group: ${{github.workflow}}-${{github.head_ref}}
+  cancel-in-progress: true
+
+env:
+  WG_TELEMETRY_DISABLED: 1
+  WORKING_DIRECTORY: '.'
+  CI: true
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/go
+        with:
+          working-directory: ${{ env.WORKING_DIRECTORY }}
+
+      - uses: ./.github/actions/node
+        with:
+          working-directory: ${{ env.WORKING_DIRECTORY }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: ./.github/actions/wunderctl
+
+      - name: Cache Nextjs builds
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/testapps/nextjs/.next/cache
+          # Generate a new cache whenever packages or source files change
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('testapps/nextjs/**.[jt]s', 'testapps/nextjs/**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+
+      - name: Set up cargo cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            packages/testsuite/apps/basic/rust/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('packages/testsuite/apps/basic/rust/Cargo.toml') }}
+          restore-keys: ${{ runner.os }}-cargo-
+
+      - name: Install Protoc
+        uses: abelfodil/protoc-action@v1
+        with:
+          protoc-version: '21.5'
+
+      - name: Bootstrap PNPM workspace
+        run: ./scripts/pnpm.sh
+
+      - name: Build all libs + apps
+        run: pnpm build
+
+      - name: Check if git is not dirty after generating files
+        run: git diff --no-ext-diff --exit-code
+
+      - name: Run all NPM tests
+        run: pnpm test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run testsuite
+        run: pnpm test:suite:ci
+
+      - name: Run Rust tests
+        working-directory: packages/testsuite/apps/basic/rust
+        run: ./test.sh
+
+      - name: Determine changed files
+        id: changed
+        uses: ./.github/actions/changed
+
+      - name: Check for formatting errors in changed files
+        run: pnpm exec -- prettier --check --ignore-unknown ${{ steps.changed.outputs.changed }}

@@ -1,0 +1,40 @@
+{
+  "name": "wundergraph-vite-swr",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run dev:vite\" \"npm run wundergraph\" \"npm run browser\"",
+    "check": "tsc --noEmit",
+    "clean": "rimraf ./.next",
+    "wundergraph": "wunderctl up",
+    "browser": "wait-on \"http-get://localhost:5173\" && wait-on \"http-get://localhost:9991\" && open-cli http://localhost:5173",
+    "dev:vite": "vite",
+    "build:wundergraph": "wunderctl generate",
+    "build:vite": "vite build",
+    "build": "npm run build:wundergraph && npm run build:vite",
+    "preview": "vite preview",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@wundergraph/sdk": "^0.184.2",
+    "@wundergraph/swr": "^0.19.3",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "swr": "^2.2.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.3.1",
+    "@types/node-fetch": "^2.6.2",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.0",
+    "concurrently": "^6.0.0",
+    "jest": "^29.6.1",
+    "node-fetch": "^2.6.7",
+    "open-cli": "^7.0.1",
+    "ts-jest": "^29.1.1",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.0",
+    "wait-on": "^6.0.0"
+  }
+}

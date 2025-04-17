@@ -1,0 +1,36 @@
+
+# load weather data for a city by name
+query weather_getCityByName_query($name: String!) {
+  weather_getCityByName(name: $name) {
+    coord {
+      lat
+      lon
+    }
+    country
+    id
+    name
+    weather {
+      clouds {
+        all
+        humidity
+        visibility
+      }
+      summary {
+        description
+        icon
+        title
+      }
+      temperature {
+        actual
+        feelsLike
+        max
+        min
+      }
+      timestamp
+      wind {
+        deg
+        speed
+      }
+    }
+  }
+}

@@ -1,0 +1,184 @@
+type Query {
+    me: User
+    identifiable: Identifiable
+    histories: [History]
+    cat: Cat
+
+    # merge data test cases
+    interfaceUnion(which: Which! = A): AB
+    abstractList: [AbstractListItem]
+    titleName: TitleName
+    cds: [CD]
+    otherInterfaces: [SomeInterface]
+    someNestedInterfaces: [SomeNestedInterface]
+}
+
+type Cat {
+    name: String!
+}
+
+interface Identifiable {
+    id: ID!
+}
+
+type User implements Identifiable @key(fields: "id")  {
+    id: ID!
+    username: String!
+    history: [History!]!
+    realName: String!
+}
+
+type Product @key(fields: "upc") {
+    upc: String! @external
+}
+
+union History = Purchase | Sale
+
+interface Info {
+    quantity: Int!
+}
+
+type Purchase implements Info {
+    product: Product!
+    wallet: Wallet
+    quantity: Int!
+}
+
+interface Store {
+    location: String!
+}
+
+type Sale implements Store {
+    product: Product!
+    rating: Int!
+    location: String!
+}
+
+interface Wallet {
+    currency: String!
+    amount: Float!
+}
+
+type WalletType1 implements Wallet {
+    currency: String!
+    amount: Float!
+    specialField1: String!
+}
+
+type WalletType2 implements Wallet {
+    currency: String!
+    amount: Float!
+    specialField2: String!
+}
+
+enum Which {
+    A
+    B
+}
+
+union AB = A | B
+
+type A implements Namer {
+    name: String!
+}
+
+type B implements Namer {
+    name: String!
+}
+
+interface Namer {
+    name: String!
+}
+
+interface AbstractListItem {
+    obj: OtherInterface!
+}
+
+type ConcreteListItem1 implements AbstractListItem {
+    obj: OtherInterface!
+}
+
+type ConcreteListItem2 implements AbstractListItem {
+    obj: OtherInterface!
+}
+
+interface OtherInterface {
+    name: String!
+    names: [String!]!
+}
+
+interface SomeNestedInterface {
+    otherInterfaces: [SomeInterface]
+}
+
+type SomeNestedType1 implements SomeNestedInterface {
+    otherInterfaces: [SomeInterface]
+}
+
+type SomeNestedType2 implements SomeNestedInterface {
+    otherInterfaces: [SomeInterface]
+}
+
+interface SomeInterface {
+    someObject: SomeObject!
+}
+
+type SomeType1 implements OtherInterface & SomeInterface {
+    name: String!
+    age: Int!
+    names: [String!]!
+    someObject: SomeObject!
+}
+
+type SomeType2 implements OtherInterface & SomeInterface {
+    name: String!
+    height: Float!
+    names: [String!]!
+    someObject: SomeObject!
+}
+
+type SomeType3 implements SomeInterface {
+    someObject: SomeObject!
+}
+
+type SomeObject {
+    a: String!
+    b: String!
+    c: String!
+}
+
+type TitleName implements Title & Name {
+    a: String!
+    b: String!
+    c: String!
+    title: String!
+    name: String!
+}
+
+interface Title {
+    title: String!
+}
+
+interface Name {
+    name: String!
+}
+
+union CD = C | D
+
+type C implements CDer {
+    name: CDerObj
+}
+
+type D implements CDer {
+    name: CDerObj
+}
+
+interface CDer {
+    name: CDerObj
+}
+
+type CDerObj {
+    first: String!
+    middle: String!
+    last: String!
+}

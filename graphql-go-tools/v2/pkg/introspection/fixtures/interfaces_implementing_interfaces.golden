@@ -1,0 +1,353 @@
+{
+  "__schema": {
+    "queryType": {
+      "kind": "SCALAR",
+      "name": "",
+      "description": "",
+      "inputFields": null,
+      "interfaces": null,
+      "possibleTypes": null,
+      "__typename": ""
+    },
+    "mutationType": null,
+    "subscriptionType": null,
+    "types": [
+      {
+        "kind": "INTERFACE",
+        "name": "BaseInterface",
+        "description": "",
+        "fields": [
+          {
+            "name": "fieldOne",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          }
+        ],
+        "inputFields": [],
+        "interfaces": [],
+        "possibleTypes": [],
+        "__typename": "__Type"
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "SecondInterface",
+        "description": "",
+        "fields": [
+          {
+            "name": "fieldOne",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          },
+          {
+            "name": "fieldTwo",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          }
+        ],
+        "inputFields": [],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "BaseInterface",
+            "ofType": null,
+            "__typename": "__Type"
+          }
+        ],
+        "possibleTypes": [],
+        "__typename": "__Type"
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "ThirdInterface",
+        "description": "",
+        "fields": [
+          {
+            "name": "fieldOne",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          },
+          {
+            "name": "fieldTwo",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          },
+          {
+            "name": "fieldThree",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          }
+        ],
+        "inputFields": [],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "SecondInterface",
+            "ofType": null,
+            "__typename": "__Type"
+          },
+          {
+            "kind": "INTERFACE",
+            "name": "BaseInterface",
+            "ofType": null,
+            "__typename": "__Type"
+          }
+        ],
+        "possibleTypes": [],
+        "__typename": "__Type"
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "IDType",
+        "description": "",
+        "fields": [
+          {
+            "name": "id",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          }
+        ],
+        "inputFields": [],
+        "interfaces": [],
+        "possibleTypes": [],
+        "__typename": "__Type"
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "SoftDelete",
+        "description": "",
+        "fields": [
+          {
+            "name": "deleted",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          },
+          {
+            "name": "id",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          }
+        ],
+        "inputFields": [],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "IDType",
+            "ofType": null,
+            "__typename": "__Type"
+          }
+        ],
+        "possibleTypes": [],
+        "__typename": "__Type"
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Record",
+        "description": "",
+        "fields": [
+          {
+            "name": "data",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          },
+          {
+            "name": "id",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          },
+          {
+            "name": "deleted",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": null,
+                "ofType": null,
+                "__typename": "__Type"
+              },
+              "__typename": "__Type"
+            },
+            "isDeprecated": false,
+            "deprecationReason": null,
+            "__typename": "__Field"
+          }
+        ],
+        "inputFields": [],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "SoftDelete",
+            "ofType": null,
+            "__typename": "__Type"
+          },
+          {
+            "kind": "INTERFACE",
+            "name": "IDType",
+            "ofType": null,
+            "__typename": "__Type"
+          }
+        ],
+        "possibleTypes": [],
+        "__typename": "__Type"
+      }
+    ],
+    "directives": [],
+    "__typename": "__Schema"
+  }
+}

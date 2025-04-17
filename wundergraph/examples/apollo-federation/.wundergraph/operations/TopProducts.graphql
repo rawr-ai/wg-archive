@@ -1,0 +1,21 @@
+query {
+	topProducts: topProducts(random: true) {
+		upc
+		name
+		price
+		reviews {
+			id
+			body
+			author {
+				id
+				name
+				username
+				reviews {
+					product {
+						name
+					}
+				}
+			}
+		}
+	}
+}

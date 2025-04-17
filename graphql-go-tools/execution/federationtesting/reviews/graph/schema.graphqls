@@ -1,0 +1,71 @@
+type Query {
+    me: User
+    cat: Cat
+}
+
+type Cat {
+    name: String!
+}
+
+interface Comment {
+    upc: String!
+    body: String!
+}
+
+type Review {
+    body: String!
+    author: User! @provides(fields: "username")
+    product: Product!
+    attachments: [Attachment]
+    comment: Comment
+}
+
+interface Iface {
+    subject: String!
+}
+
+type Question implements Comment & Iface {
+    upc: String!
+    body: String!
+    subject: String!
+}
+
+type OtherQuestion implements Comment {
+    upc: String!
+    body: String!
+}
+
+type DetatchedQuestion implements Comment {
+    upc: String!
+    body: String!
+}
+
+type Rating implements Comment {
+    upc: String!
+    body: String!
+    score: Int!
+}
+
+type Video implements Iface {
+    upc: String!
+    size: Float!
+    subject: String!
+}
+
+union Attachment = Question | Rating | Video
+
+type User @key(fields: "id") {
+    id: ID! @external
+    username: String! @external
+    reviews: [Review]
+    realName: String!
+}
+
+type Product @key(fields: "upc") {
+    upc: String! @external
+    reviews: [Review]
+}
+
+type Mutation {
+    addReview(authorID: String! upc: String!, review: String!): Review!
+}

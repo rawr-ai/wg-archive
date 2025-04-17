@@ -1,0 +1,3 @@
+mutation ($id: BigInt!) {
+	notes_deleteNote(noteID: $id)
+}

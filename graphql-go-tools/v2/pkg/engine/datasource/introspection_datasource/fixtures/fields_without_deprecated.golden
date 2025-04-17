@@ -1,0 +1,34 @@
+[
+  {
+    "name": "droid",
+    "description": "",
+    "args": [
+      {
+        "name": "id",
+        "description": "",
+        "type": {
+          "kind": "NON_NULL",
+          "name": null,
+          "ofType": {
+            "kind": "SCALAR",
+            "name": "ID",
+            "ofType": null,
+            "__typename": "__Type"
+          },
+          "__typename": "__Type"
+        },
+        "defaultValue": null,
+        "__typename": "__InputValue"
+      }
+    ],
+    "type": {
+      "kind": "OBJECT",
+      "name": "Droid",
+      "ofType": null,
+      "__typename": "__Type"
+    },
+    "isDeprecated": false,
+    "deprecationReason": null,
+    "__typename": "__Field"
+  }
+]

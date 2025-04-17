@@ -1,0 +1,7 @@
+query Countries($filter: countries_CountryFilterInput) @removeNullVariables {
+	countries_countries(filter: $filter) {
+		code
+		name
+		capital
+	}
+}
